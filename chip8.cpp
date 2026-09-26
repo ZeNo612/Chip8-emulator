@@ -32,6 +32,8 @@ void Chip8::LoadRom(char const* filename)
 }
 
 Chip8::Chip8()
+    // using system clock and epoch time to feed a unique seed into the randGen
+    :randGen(std::chrono::system_clock::now().time_since_epoch().count())
 {
     // init PC
     pc = START_ADDRESS
@@ -41,6 +43,8 @@ Chip8::Chip8()
     {
         memory[FONTSET_START_ADDRESS + i] = fontset[i]
     }
+
+    randByte = std::uniform_int_distribution<uint8_t>(0, 255U);
 }
 
 uint8_t fontset[FONTSET_SIZE] =

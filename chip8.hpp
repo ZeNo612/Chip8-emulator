@@ -1,4 +1,6 @@
 #include <cstdint>
+#include <random>
+#include <chrono>
 
 class Chip8
 {
@@ -14,4 +16,13 @@ public:
     uint8_t keypad[16]{};
     uint32_t video[64 * 32]{};
     uint16_t opcode;
+
+    Chip8()
+        : randGen(std::chrono::system_clock::now().time_since_epoch().count())
+    {
+        
+    }
+
+    std::default_random_engine randGen;
+    std:uniform_int_distribution<uint8_t> randByte;
 };
